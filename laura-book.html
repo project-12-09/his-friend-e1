@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L'Aura — A Story</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Cinzel:wght@500;600;700&family=EB+Garamond:ital@0;1&display=swap');
+
+:root{
+  --ink: #14131a;
+  --ink-deep: #0c0b10;
+  --parchment: #ece3d0;
+  --parchment-dim: #cfc3a6;
+  --gold: #c9a24b;
+  --gold-bright: #e6c876;
+  --plum: #5a3350;
+  --plum-glow: rgba(201,162,75,0.35);
+  --ember: #a94a3c;
+  --line: rgba(201,162,75,0.25);
+}
+
+*{box-sizing:border-box;}
+
+html,body{
+  margin:0;
+  padding:0;
+  background: var(--ink-deep);
+  color: var(--parchment);
+  font-family: 'EB Garamond', serif;
+  scroll-behavior:smooth;
+}
+
+body{
+  background:
+    radial-gradient(ellipse at 20% -10%, rgba(90,51,80,0.35), transparent 55%),
+    radial-gradient(ellipse at 85% 10%, rgba(201,162,75,0.10), transparent 45%),
+    var(--ink-deep);
+}
+
+/* ---------- Title / Cover ---------- */
+.cover{
+  min-height: 100svh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding: 6vh 6vw;
+  position:relative;
+  overflow:hidden;
+  border-bottom: 1px solid var(--line);
+}
+
+.cover::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background-image:
+    repeating-linear-gradient(0deg, transparent, transparent 38px, rgba(201,162,75,0.035) 39px),
+    repeating-linear-gradient(90deg, transparent, transparent 38px, rgba(201,162,75,0.02) 39px);
+  pointer-events:none;
+}
+
+.sigil{
+  width: 78px;
+  height: 78px;
+  margin-bottom: 28px;
+  opacity: 0.9;
+}
+
+.eyebrow-cover{
+  font-family:'Cinzel', serif;
+  letter-spacing: 0.35em;
+  font-size: 0.68rem;
+  color: var(--gold-bright);
+  margin-bottom: 22px;
+}
+
+.cover h1{
+  font-family:'Cinzel', serif;
+  font-weight:600;
+  font-size: clamp(3rem, 9vw, 6.2rem);
+  margin:0;
+  letter-spacing: 0.04em;
+  background: linear-gradient(180deg, var(--gold-bright) 0%, var(--gold) 55%, #8a6a2c 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 0 60px var(--plum-glow);
+}
+
+.cover .subtitle{
+  font-family:'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: clamp(1.05rem, 2vw, 1.4rem);
+  color: var(--parchment-dim);
+  margin-top: 18px;
+  max-width: 34ch;
+}
+
+.cover .dedication{
+  margin-top: 56px;
+  font-family:'Cormorant Garamond', serif;
+  font-size: 1.02rem;
+  color: var(--gold-bright);
+  opacity:0.85;
+}
+
+.dedication small{
+  display:block;
+  font-family:'EB Garamond', serif;
+  font-style: italic;
+  color: var(--parchment-dim);
+  margin-top:6px;
+  font-size: 0.85rem;
+  letter-spacing: 0.02em;
+}
+
+.scroll-cue{
+  position:absolute;
+  bottom: 34px;
+  font-family:'Cinzel', serif;
+  font-size: 0.62rem;
+  letter-spacing: 0.3em;
+  color: var(--parchment-dim);
+  opacity: 0.6;
+  animation: floaty 2.6s ease-in-out infinite;
+}
+
+@keyframes floaty{
+  0%,100%{ transform: translateY(0); opacity:0.55;}
+  50%{ transform: translateY(8px); opacity:0.9;}
+}
+
+/* ---------- Book body ---------- */
+.page{
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 10vh 7vw 4vh;
+}
+
+.chapter-mark{
+  text-align:center;
+  margin-bottom: 4.5rem;
+}
+
+.chapter-mark .num{
+  font-family:'Cinzel', serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.4em;
+  color: var(--gold);
+  display:block;
+  margin-bottom: 14px;
+}
+
+.chapter-mark h2{
+  font-family:'Cormorant Garamond', serif;
+  font-style: italic;
+  font-weight: 500;
+  font-size: 2.1rem;
+  color: var(--parchment);
+  margin: 0;
+}
+
+.chapter-mark .flourish{
+  width: 130px;
+  height: 18px;
+  margin: 20px auto 0;
+  opacity: 0.7;
+}
+
+.story p{
+  font-family:'Cormorant Garamond', serif;
+  font-size: 1.28rem;
+  line-height: 1.85;
+  color: var(--parchment);
+  margin: 0 0 1.5em;
+}
+
+.story p:first-of-type::first-letter{
+  font-family:'Cinzel', serif;
+  font-size: 4.6rem;
+  line-height: 0.75;
+  float: left;
+  padding: 0.06em 0.09em 0 0;
+  color: var(--gold-bright);
+  text-shadow: 0 0 24px var(--plum-glow);
+}
+
+/* highlighted / special words */
+.name{
+  color: var(--gold-bright);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
+.spell{
+  position: relative;
+  color: var(--gold-bright);
+  font-style: italic;
+  padding: 0 0.15em;
+}
+.spell::after{
+  content:"";
+  position:absolute;
+  left:0; right:0; bottom:-2px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+
+.ache{
+  color: var(--ember);
+  font-style: italic;
+}
+
+.whisper{
+  color: var(--parchment-dim);
+  font-style: italic;
+  letter-spacing: 0.01em;
+}
+
+/* pull quotes for gut-punch lines */
+.pull{
+  font-family:'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 1.75rem;
+  line-height: 1.5;
+  text-align:center;
+  color: var(--gold-bright);
+  margin: 3rem auto;
+  max-width: 30ch;
+  position: relative;
+  padding: 1.4rem 0;
+}
+.pull::before, .pull::after{
+  content:"";
+  display:block;
+  width: 46px;
+  height: 1px;
+  background: var(--gold);
+  margin: 0 auto 1rem;
+  opacity: 0.6;
+}
+.pull::after{
+  margin: 1rem auto 0;
+}
+
+/* text message styling */
+.text-bubble{
+  font-family:'EB Garamond', serif;
+  font-size: 1.08rem;
+  color: var(--ink-deep);
+  background: var(--gold-bright);
+  display: inline-block;
+  padding: 0.75em 1.1em;
+  border-radius: 4px 4px 4px 2px;
+  margin: 0.4em 0 1.6em;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.35);
+}
+.text-sender{
+  display:block;
+  font-family:'Cinzel', serif;
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  color: var(--parchment-dim);
+  margin-bottom: 0.6em;
+}
+
+/* scene divider */
+.divider{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap: 18px;
+  margin: 3.5rem 0;
+  color: var(--gold);
+  opacity: 0.75;
+}
+.divider .line{
+  height:1px;
+  width: 70px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+.divider .mark{
+  font-size: 0.9rem;
+}
+
+/* dialogue emphasis */
+.story em{
+  color: var(--parchment);
+  font-style: italic;
+}
+
+/* closing */
+.closing{
+  text-align:center;
+  padding: 6vh 7vw 12vh;
+  border-top: 1px solid var(--line);
+  margin-top: 4rem;
+}
+
+.closing .ribbon{
+  font-family:'Cinzel', serif;
+  letter-spacing: 0.35em;
+  font-size: 0.68rem;
+  color: var(--gold);
+  margin-bottom: 20px;
+}
+
+.closing h3{
+  font-family:'Cormorant Garamond', serif;
+  font-style: italic;
+  font-weight: 500;
+  font-size: 1.8rem;
+  color: var(--parchment);
+  margin: 0 0 14px;
+}
+
+.closing p.note{
+  font-family:'Cormorant Garamond', serif;
+  font-size: 1.05rem;
+  color: var(--parchment-dim);
+  max-width: 40ch;
+  margin: 0 auto;
+}
+
+.heart{
+  color: var(--ember);
+  display:inline-block;
+  margin-top: 22px;
+  font-size: 1.3rem;
+}
+
+@media (max-width: 560px){
+  .page{ padding: 8vh 6vw 3vh; }
+  .story p{ font-size: 1.15rem; }
+  .pull{ font-size: 1.4rem; }
+}
+</style>
+</head>
+<body>
+
+<section class="cover">
+  <svg class="sigil" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="50" cy="50" r="34" stroke="#c9a24b" stroke-width="1"/>
+    <path d="M50 20 L58 44 L82 44 L62 58 L70 82 L50 68 L30 82 L38 58 L18 44 L42 44 Z" stroke="#e6c876" stroke-width="1" fill="none"/>
+  </svg>
+  <div class="eyebrow-cover">a story of longing, loyalty &amp; light left unseen</div>
+  <h1>L'Aura</h1>
+  <p class="subtitle">Some hearts wait at tables no one saves a seat for.</p>
+  <p class="dedication">for Ivy, and the ache of being thirty-seven minutes too invisible
+    <small>a story written by my friend — kept here because it matters to me</small>
+  </p>
+  <div class="scroll-cue">↓ B E G I N ↓</div>
+</section>
+
+<article class="page story">
+
+  <div class="chapter-mark">
+    <span class="num">Chapter One</span>
+    <h2>The Empty Chair</h2>
+    <svg class="flourish" viewBox="0 0 200 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 12 H80 M120 12 H200" stroke="#c9a24b" stroke-width="1"/>
+      <circle cx="100" cy="12" r="6" stroke="#e6c876" stroke-width="1"/>
+    </svg>
+  </div>
+
+  <p>The glowing neon sign of <span class="name">L'Aura</span> cut through the damp night air, casting soft violet reflections over the crowded entrance. Inside, the energy was electric. Laughter ricocheted off concrete walls, cutlery clinked, and the rich aroma of roasted herbs filled the room.</p>
+
+  <p><span class="name">Raze</span> had arranged everything. As usual, he was the <span class="spell">center of gravity</span>—sitting at the head of a long wooden table, surrounded by his inner circle: <span class="name">Willow</span>, <span class="name">Grace</span>, <span class="name">Henry</span>, <span class="name">Liam</span>, <span class="name">Arlo</span>, and <span class="name">Theo</span>. Next to Theo sat <span class="name">Aria</span>, laughing at something Raze had just said.</p>
+
+  <p>Everyone was there. Except <span class="name">Tessa</span>—who was still tied up at an event—and <span class="name">Ivy</span>.</p>
+
+  <p>When the clock hit 8:30 PM, the waiter stopped by the table. Without hesitation, the group placed their orders. Nobody asked if they should wait for Ivy. Not even Aria, the friend Ivy herself had introduced to the group just months ago.</p>
+
+  <p>Plates arrived, glasses clinked, and the feast began.</p>
+
+  <p>Ten minutes later, the glass door at the front entrance chimed softly as Ivy walked in.</p>
+
+  <p>Her heart did a small, hopeful flip when she spotted the table. She adjusted her jacket, took a breath, and slipped into an empty chair near the edge of the seating arrangement.</p>
+
+  <p>"Hey—" Ivy opened her mouth to speak, but her voice was instantly swallowed by a burst of loud laughter.</p>
+
+  <p>Henry was recounting a story, gesturing wildly. Raze leaned back in his chair, a boyish grin spreading across his face, his striking brown eyes crinkling at the corners. Sitting just a few seats away, Aria was leaning in, completely captivated by the story.</p>
+
+  <p>Ivy sat back. She waited for someone to glance her way. A simple nod, a wave, a "Hey, you made it!"</p>
+
+  <p class="whisper">Nothing came.</p>
+
+  <p>Minutes stretched endlessly. Ten minutes turned into twenty. Twenty turned into thirty-five.</p>
+
+  <p>Ivy sat frozen at the edge of the table, an <span class="spell">uninvited ghost</span> at a party meant for friends. Her throat tightened with a suffocating knot of shame and isolation. She watched Aria joke with Raze—the same Aria who used to hang on Ivy's every word, now completely absorbed in Raze's orbit.</p>
+
+  <p class="pull">They didn't even notice I wasn't here when they ordered. They didn't even care.</p>
+
+  <p>Silently, without making a sound, Ivy pulled her coat tight around herself, stood up, and walked out into the chilly night air.</p>
+
+  <p class="whisper">No one looked back.</p>
+
+  <div class="divider"><span class="line"></span><span class="mark">✦</span><span class="line"></span></div>
+
+  <div class="chapter-mark">
+    <span class="num">Chapter Two</span>
+    <h2>The Call</h2>
+    <svg class="flourish" viewBox="0 0 200 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 12 H80 M120 12 H200" stroke="#c9a24b" stroke-width="1"/>
+      <circle cx="100" cy="12" r="6" stroke="#e6c876" stroke-width="1"/>
+    </svg>
+  </div>
+
+  <p>Sitting in her car, the tears finally spilled over. She stared at the dashboard, her chest heaving with quiet, ragged sobs.</p>
+
+  <p>The sharp ring of her phone broke the silence. The screen illuminated with <span class="name">Tessa</span>.</p>
+
+  <p>Ivy took a shuddering breath and pressed answer.</p>
+
+  <p>"Tess?"</p>
+
+  <p>"Ivy! Hey, I just pulled up to the restaurant," Tessa's voice came through the speaker. "Where are you parked? I don't see your car anywhere."</p>
+
+  <p>"I... I left, Tess," Ivy whispered, her voice cracking despite her best efforts to keep it steady. "I went in... but I don't think anybody actually wanted me there. Even Aria didn't ask where I was. They already finished eating."</p>
+
+  <p>"Wait, what?" Tessa's tone instantly sharpened with protective anger.</p>
+
+  <p>"It's always like this," Ivy wiped a stray tear from her cheek, her voice thick with raw emotion. "I introduced Aria to Raze and the guys... and now she's happier with them than she ever was with me. People just... throw me away like a used tissue when they're done with me."</p>
+
+  <p>"Screw them, Ivy. Seriously," Tessa snapped softly. "Listen, I only came to this dinner for you anyway. I barely know anyone else there besides you. I'm not going in alone. I'm coming straight to your place. We're doing our own dinner."</p>
+
+  <p>Ten minutes later, Tessa arrived at Ivy's apartment carrying a large pizza box and a warm paper bag filled with fresh chocolate chip cookies—the only sweet treat guaranteed to fix Ivy's mood.</p>
+
+  <p>They sat on the living room rug, eating in comfortable comfort. For a brief moment, the heavy lump in Ivy's chest began to melt away.</p>
+
+  <p>Then, Ivy's phone buzzed on the coffee table.</p>
+
+  <div class="text-bubble"><span class="text-sender">incoming call</span>Raze Kuro</div>
+
+  <p>Before she could process it, the screen switched to an incoming call. Ivy stared at his name for two seconds before answering, putting it on speaker.</p>
+
+  <p>"Ivy? Where are you staying?" Raze's smooth voice came through the speaker. "We just finished dinner, but you still haven't shown up."</p>
+
+  <p>Ivy let out a quiet, bitter exhale.</p>
+
+  <p class="whisper">"Oh."</p>
+
+  <p>The disappointment in that single word was heavy enough to crush a room, but Raze didn't seem to catch it.</p>
+
+  <p>"Actually, I was at the dinner," Ivy said, keeping her tone flat. "I sat at the table for 35 minutes. But you were so busy with your friends that you probably didn't even bother to look up, right?"</p>
+
+  <p>There was a brief pause on the other end.</p>
+
+  <p>"Wait... seriously? You were there?"</p>
+
+  <p>"Yeah. I was," she replied, a faint, sarcastic edge creeping into her voice. "Whatever. You guys already had dinner anyway, so why are you calling now?"</p>
+
+  <p>"Well... you didn't say hello to me!" Raze argued smoothly. "How was I supposed to know you arrived if you didn't say anything?"</p>
+
+  <p>Ivy's heart hammered against her ribs like a heavy iron mallet. She fought to keep the tremor out of her voice.</p>
+
+  <p>"Really, Raze? There were seven people at that table. How is it possible that not a single person saw me walk in? I'm not invisible. The bell literally rang at the door when I entered. You really didn't look up? Really?"</p>
+
+  <p>Raze sighed on the other end, his tone softening slightly.</p>
+
+  <p>"Look, I'm sorry, okay? Just come over now. Please. Let's hang out."</p>
+
+  <p>"No, Raze. I'm not coming," Ivy said flatly. "I already had dinner. What's the point now?"</p>
+
+  <p>"Come on, Ivy. Just come."</p>
+
+  <p>"No. I said no."</p>
+
+  <p>Raze's tone shifted instantly, cooling down into a sharp, distant edge.</p>
+
+  <p>"Fine. I'm not going to force you."</p>
+
+  <p>Before Ivy could even process the sudden coldness in his voice, background noise flooded the speaker—someone calling Raze's name from across the venue.</p>
+
+  <p class="ache">Click.</p>
+
+  <p>The call ended abruptly.</p>
+
+  <p>Ivy stared at her darkened screen as the silence of the room crashed back down on her. The sharp dismissal stung worse than being ignored at the table.</p>
+
+  <p>She turned her head slightly toward Tessa, who was watching her with a concerned frown.</p>
+
+  <p>Ivy swallowed the lump in her throat and forced a weak smile. She couldn't tell Tessa the truth. She couldn't explain why Raze's coldness cut so deeply, or why her chest felt hollowed out.</p>
+
+  <p>She was in a three-year relationship with <span class="name">Aiden</span>.</p>
+
+  <p>Tessa was her best friend.</p>
+
+  <p class="pull">How could she possibly admit that the boy who just hung up on her—her boyfriend's friend—was the one who held her entire heart in his hands?</p>
+
+  <p>She squeezed her eyes shut, keeping the secret buried deep inside, right where it hurt the most.</p>
+
+  <div class="divider"><span class="line"></span><span class="mark">✦</span><span class="line"></span></div>
+
+  <div class="chapter-mark">
+    <span class="num">Chapter Three</span>
+    <h2>Thirty-Seven Minutes</h2>
+    <svg class="flourish" viewBox="0 0 200 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 12 H80 M120 12 H200" stroke="#c9a24b" stroke-width="1"/>
+      <circle cx="100" cy="12" r="6" stroke="#e6c876" stroke-width="1"/>
+    </svg>
+  </div>
+
+  <p><em>(Continuing right after Raze hung up the first time...)</em></p>
+
+  <p>Ivy and Tessa tried to get back to enjoying their pizza and cookies, but five minutes later, Ivy's phone screen lit up again.</p>
+
+  <div class="text-bubble"><span class="text-sender">incoming call</span>Raze Kuro</div>
+
+  <p>Ivy stared at the vibrating phone. No matter how much he hurt her, her hand acted on its own. She could never bring herself to ignore his calls—her heart simply wouldn't let her.</p>
+
+  <p>"Darling, wait, I'll be right back," Ivy whispered to Tessa, standing up and heading into her bedroom.</p>
+
+  <p>"Take your time," Tessa called out gently.</p>
+
+  <p>Ivy closed the bedroom door, leaned against it, and pressed the phone to her ear.</p>
+
+  <p>"Hmm? What happened?"</p>
+
+  <p>"Ivy? Please come over, man. I'm really sorry," Raze's voice came through, softer this time, filled with genuine regret. "I honestly didn't know you were there. It was a total misunderstanding, yaar. Please, just come for a little bit? Everyone's at my place now for a gathering. We're doing a movie night. You and Tessa should both come."</p>
+
+  <p>Ivy leaned her head back against the cool doorframe, her heart aching.</p>
+
+  <p>"I'll send Tessa over. I'm not coming."</p>
+
+  <p>"No, yaar, you come!" Raze pushed back immediately. "Tessa isn't even my friend like that. You're my friend. You come."</p>
+
+  <p>A faint, bitter smile touched Ivy's lips.</p>
+
+  <p>"Nah, it's fine. I don't have an issue anymore. But remember that movie I picked out for tonight? You guys can just watch it without me now."</p>
+
+  <p>"Why? What happened now?" Raze asked, sounding confused.</p>
+
+  <p>"Nothing... I just made peace with it," Ivy replied quietly. "Anyway, I'll send Tessa."</p>
+
+  <p>Without waiting for his response, she ended the call with a soft click.</p>
+
+  <p>She took a deep breath to compose herself before stepping back into the living room.</p>
+
+  <p>"Babe, you should go to the movie night," Ivy told Tessa warmly. "Aria's there too, so you can hang out with her. They're inviting you."</p>
+
+  <p>Tessa frowned, looking at her with concern.</p>
+
+  <p>"How can I go without you, Ivy? That makes no sense."</p>
+
+  <p>"Babe, it's totally fine, please go. It's no big deal," Ivy urged gently.</p>
+
+  <p>"I've only known Raze and his crew for like a week," Tessa shook her head, pulling Ivy into a half-hug. "I won't be comfortable around them without you. I'm staying right here."</p>
+
+  <p>Instead of going to Raze's place, the two girls spent the rest of the night curled up on the couch, watching a completely different movie—definitely not the one Ivy had curated for Raze's group.</p>
+
+  <p>By midnight, Tessa said her goodbyes and headed home.</p>
+
+  <p>At 2:00 AM, Ivy was lying in bed, staring blankly at the ceiling in the dark apartment. Her phone buzzed beside her pillow.</p>
+
+  <div class="text-bubble"><span class="text-sender">Raze</span>We didn't watch that movie. We couldn't watch it without you.</div>
+
+  <p>Ivy stared at the text message, the cold hardness in her chest suddenly melting away. Just a single sentence from him was enough to undo all her defenses.</p>
+
+  <p>Before she could even type a reply, Raze called her.</p>
+
+  <p>She answered, her tone soft, but Raze was strictly business, talking casually about minor things. Still, Ivy held onto every word, giving quiet "Hmm" and "Yeah" responses just to keep hearing his voice.</p>
+
+  <p>"Alright Ivy, let me take my medicine real quick, ok?" Raze said suddenly. "I'll call you right back."</p>
+
+  <p>"Okay," Ivy murmured.</p>
+
+  <p>She lay in bed, shifting from side to side, clutching her blanket. Her head was throbbing with a dull, persistent ache, but she refused to close her eyes.</p>
+
+  <p>She stayed awake in the dark, staring at the glowing clock on her nightstand.</p>
+
+  <p class="whisper">Ten minutes. Twenty minutes. Thirty minutes.</p>
+
+  <p class="whisper">No call. No text.</p>
+
+  <p>Eventually, exhausted from the headache and the emotional roller coaster, Ivy drifted off into an uneasy sleep, still holding her phone in her hand.</p>
+
+  <p>The morning light streamed through the blinds, waking Ivy early. The moment her eyes fluttered open, her hands instinctively checked her phone.</p>
+
+  <p>A single message from Raze sat on her lock screen, sent long after she had fallen asleep:</p>
+
+  <div class="text-bubble"><span class="text-sender">Raze</span>I'm sorry I fell asleep. My aura just went minus 1000.</div>
+
+  <p>Ivy froze, reading the words over and over again.</p>
+
+  <p>A suffocating wave of disappointment crashed over her. She had stayed up in pain, torturing herself just waiting for a sign that he cared.</p>
+
+  <p class="pull">And his only concern was his joke about losing "aura"?</p>
+
+  <p>He didn't even realize how much he had hurt her.</p>
+
+  <p>A cold, quiet numbness settled over Ivy. She tapped open the chat, her fingers trembling slightly over the keyboard.</p>
+
+  <p>She typed out her reply, her chest hollow:</p>
+
+  <div class="text-bubble"><span class="text-sender">Ivy</span>Oh good.</div>
+
+  <p>She paused, stared at the blinking cursor, and added one final line before hitting send:</p>
+
+  <div class="text-bubble"><span class="text-sender">Ivy</span>37 mins btw.</div>
+
+  <p>She locked her screen and threw the phone onto the bed.</p>
+
+  <p>She wanted him to know—she wanted him to feel the exact weight of those <span class="spell">thirty-seven excruciating minutes</span> she had spent waiting for him in the dark.</p>
+
+  <p class="pull">Thirty-seven minutes she had never even wasted on her own boyfriend.</p>
+
+</article>
+
+<section class="closing">
+  <div class="ribbon">end of part one</div>
+  <h3>To Be Continued...</h3>
+  <p class="note">A story about the quiet ache of being overlooked, and the pull toward the person who does it anyway.</p>
+  <div class="heart">❤</div>
+</section>
+
+</body>
+</html>
